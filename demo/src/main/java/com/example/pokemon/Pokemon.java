@@ -1,6 +1,7 @@
 package com.example.pokemon;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 @Table(name="pokemon")
 public class Pokemon {
   @Id
+  @GeneratedValue
   private Long id;
 
   public Pokemon() {}

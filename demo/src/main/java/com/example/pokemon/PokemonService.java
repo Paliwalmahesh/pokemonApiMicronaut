@@ -21,6 +21,11 @@ public class PokemonService {
 
     return pokemons;
   }
+  public Pokemon getById(Long id) {
+
+    return pokemonRepositary.findById(id).orElseThrow();
+  }
+
 
   public Pokemon create(Pokemon pokemon) {
 
@@ -29,12 +34,13 @@ public class PokemonService {
 
 
 
-//
-//  public List<Pokemon> updatePokemon(Pokemon pokemon, Long id) {
-//    return pokemonRepositary.updatePokemonByID(pokemon, id);
-//  }
-//
-//  public List<Pokemon> deletePokemon(Long id) {
-//    return pokemonRepositary.deletePokemon(id);
-//  }
+
+  public Pokemon updatePokemon(Pokemon pokemon) {
+    return pokemonRepositary.update(pokemon);
+  }
+
+  public void deletePokemon(Long id) {
+    Pokemon pokemon=pokemonRepositary.findById(id).orElseThrow();
+    pokemonRepositary.delete(pokemon);
+  }
 }
