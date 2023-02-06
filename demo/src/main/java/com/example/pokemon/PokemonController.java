@@ -19,23 +19,23 @@ public class PokemonController {
   }
   ;
 
-  @Get(value = "/{id}")
-  public Pokemon getById(@PathVariable Long id) {
-    return pokemonService.getPokemon(id);
-  }
+//  @Get(value = "/{id}")
+//  public Pokemon getById(@PathVariable Long id) {
+//    return pokemonService.getPokemon(id);
+//  }
 
-  @Put(value = "/{id}")
-  public List<Pokemon> updateById(@Body Pokemon pokemon, @PathVariable Long id) {
-    return pokemonService.updatePokemon(pokemon, id);
-  }
+//  @Put(value = "/{id}")
+//  public List<Pokemon> updateById(@Body Pokemon pokemon, @PathVariable Long id) {
+//    return pokemonService.updatePokemon(pokemon, id);
+//  }
 
   @Post
   public Pokemon createPokemon(@Body Pokemon pokemon) {
     return pokemonService.create(pokemon);
   }
 
-  @Delete(value = "/{id}")
-  public List<Pokemon> deletePokemon(@PathVariable Long id) {
-    return pokemonService.deletePokemon(id);
-  }
+//  @Delete(value = "/{id}")
+//  public List<Pokemon> deletePokemon(@PathVariable Long id) {
+//    return pokemonService.deletePokemon(id);
+//  }
 }

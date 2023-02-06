@@ -82,5 +82,8 @@
         <module name="com.example.demo.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo.testResources" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

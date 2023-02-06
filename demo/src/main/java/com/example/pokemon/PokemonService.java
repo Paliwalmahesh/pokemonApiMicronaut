@@ -2,6 +2,7 @@ package com.example.pokemon;
 
 import jakarta.inject.Singleton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
@@ -13,23 +14,27 @@ public class PokemonService {
   }
 
   public List<Pokemon> get() {
-    return pokemonRepositary.getPokemonList();
+    List<Pokemon>pokemons=new ArrayList<>();
+    for(Pokemon pokemon:pokemonRepositary.findAll()){
+      pokemons.add(pokemon);
+    }
+
+    return pokemons;
   }
 
   public Pokemon create(Pokemon pokemon) {
 
-    return pokemonRepositary.addpokemon(pokemon);
+    return pokemonRepositary.save(pokemon);
   }
 
-  public Pokemon getPokemon(Long id) {
-    return pokemonRepositary.getpokemon(id);
-  }
 
-  public List<Pokemon> updatePokemon(Pokemon pokemon, Long id) {
-    return pokemonRepositary.updatePokemonByID(pokemon, id);
-  }
 
-  public List<Pokemon> deletePokemon(Long id) {
-    return pokemonRepositary.deletePokemon(id);
-  }
+//
+//  public List<Pokemon> updatePokemon(Pokemon pokemon, Long id) {
+//    return pokemonRepositary.updatePokemonByID(pokemon, id);
+//  }
+//
+//  public List<Pokemon> deletePokemon(Long id) {
+//    return pokemonRepositary.deletePokemon(id);
+//  }
 }

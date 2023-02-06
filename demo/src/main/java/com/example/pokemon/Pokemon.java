@@ -1,6 +1,13 @@
 package com.example.pokemon;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="pokemon")
 public class Pokemon {
+  @Id
   private Long id;
 
   public Pokemon() {}
