@@ -6,11 +6,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="pokemon")
+@Table(name = "pokemon")
 public class Pokemon {
-  @Id
-  @GeneratedValue
-  private Long id;
+  @Id @GeneratedValue private Long id;
 
   public Pokemon() {}
 
