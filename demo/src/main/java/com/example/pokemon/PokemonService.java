@@ -1,7 +1,7 @@
 package com.example.pokemon;
 
 import jakarta.inject.Singleton;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Singleton
@@ -13,25 +13,24 @@ public class PokemonService {
   }
 
   public List<Pokemon> get() {
-    List<Pokemon> pokemons = new ArrayList<>();
-    for (Pokemon pokemon : pokemonRepositary.findAll()) {
-      pokemons.add(pokemon);
-    }
-    return pokemons;
+    return pokemonRepositary.findAll();
   }
 
   public Pokemon getById(Long id) {
-    Pokemon pokemon =
+
+ return
         pokemonRepositary
             .findById(id)
             .orElseThrow(() -> new PokemonValidationException("No such pokemon"));
 
-    return pokemon;
   }
 
   public Pokemon create(Pokemon pokemon) {
+
     if (pokemon.getName() == null) {
       throw new PokemonValidationException("null value of Name is not allowed");
+    } else if (existByName(pokemon)) {
+      throw new PokemonValidationException("Pokemon with same name already exists");
     } else if (pokemon.getImageurl() == null) {
       throw new PokemonValidationException("null value of ImageUrl is not allowed");
     } else if (pokemon.getSpeciallity() == null) {
@@ -43,7 +42,8 @@ public class PokemonService {
   }
 
   public Pokemon updatePokemon(Pokemon pokemon) {
-    if (pokemon.getId() == null) {
+
+    if (pokemon.getId() == null ) {
       throw new PokemonValidationException("null value of Id is not allowed");
     } else if (pokemon.getName() == null) {
       throw new PokemonValidationException("null value of Name is not allowed");
@@ -51,9 +51,12 @@ public class PokemonService {
       throw new PokemonValidationException("null value of ImageUrl is not allowed");
     } else if (pokemon.getSpeciallity() == null) {
       throw new PokemonValidationException("null value of Speciality is not allowed");
-    } else {
+    } else if(existByName(pokemon)) {
 
       return pokemonRepositary.update(pokemon);
+    }
+    else{
+      throw new PokemonValidationException("Pokemon Does not exist");
     }
   }
 
@@ -66,6 +69,15 @@ public class PokemonService {
       throw new PokemonValidationException("No pokemon found");
     } else {
       pokemonRepositary.delete(pokemon);
+    }
+  }
+
+  public boolean existByName(Pokemon pokemon) {
+
+    if(pokemonRepositary.findByName(pokemon.getName()).isPresent()) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
