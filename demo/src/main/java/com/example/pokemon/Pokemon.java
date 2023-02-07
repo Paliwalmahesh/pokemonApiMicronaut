@@ -1,27 +1,30 @@
 package com.example.pokemon;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.example.speciallity.Speciallity;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "pokemon")
 public class Pokemon {
-  @Id @GeneratedValue private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
   public Pokemon() {}
 
-  public Pokemon(Long id, String name, String speciallity, String imageurl) {
+  private String name;
+  @ManyToOne
+  @JoinColumn(referencedColumnName = "id", name = "speciallity")
+  private Speciallity speciallity;
+  private String imageurl;
+
+  public Pokemon(Long id, String name, Speciallity speciallity, String imageurl) {
     this.id = id;
     this.name = name;
     this.speciallity = speciallity;
     this.imageurl = imageurl;
   }
-
-  private String name;
-  private String speciallity;
-  private String imageurl;
 
   public Long getId() {
     return id;
@@ -39,11 +42,11 @@ public class Pokemon {
     this.name = name;
   }
 
-  public String getSpeciallity() {
+  public Speciallity getSpeciallity() {
     return speciallity;
   }
 
-  public void setSpeciallity(String speciallity) {
+  public void setSpeciallity(Speciallity speciallity) {
     this.speciallity = speciallity;
   }
 

@@ -1,5 +1,8 @@
 package com.example.pokemon;
 
+import com.example.exception.PokemonValidationException;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.*;
 
 import java.util.List;
@@ -14,14 +17,12 @@ public class PokemonController {
 
   @Get
   public List<Pokemon> getPokemons() {
-
     return pokemonService.get();
   }
-  ;
 
   @Get(value = "/{id}")
-  public Pokemon getById(@PathVariable Long id) {
-    return pokemonService.getById(id);
+  public HttpResponse<Pokemon> getById(@PathVariable Long id) {
+    return HttpResponse.ok(pokemonService.getById(id));
   }
 
   @Put
@@ -30,13 +31,18 @@ public class PokemonController {
   }
 
   @Post
-  public Pokemon createPokemon(@Body Pokemon pokemon) {
+  public HttpResponse<Pokemon> createPokemon(@Body PokemonCreateForm pokemon) {
 
-    return pokemonService.create(pokemon);
+    return HttpResponse.created(pokemonService.create(pokemon));
   }
 
   @Delete(value = "/{id}")
-  public void deletePokemon(@PathVariable Long id) {
-    pokemonService.deletePokemon(id);
+  public HttpResponse<String> deletePokemon(@PathVariable Long id) {
+    try {
+      pokemonService.deletePokemon(id);
+      return HttpResponse.ok("Deleted");
+    } catch (PokemonValidationException e) {
+      return HttpResponse.badRequest(e.getMessage());
+    }
   }
 }
