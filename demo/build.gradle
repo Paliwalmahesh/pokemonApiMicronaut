@@ -1,6 +1,7 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.7.0"
+    id("jacoco")
 //    id("io.micronaut.test-resources") version "3.7.0"
 }
 
@@ -14,7 +15,7 @@ repositories {
 dependencies {
     annotationProcessor("io.micronaut.data:micronaut-data-processor")
     annotationProcessor("io.micronaut:micronaut-http-validation")
-
+    implementation("org.mockito:mockito-testng:0.4.30")
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-jackson-databind")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
@@ -22,7 +23,7 @@ dependencies {
     implementation("jakarta.annotation:jakarta.annotation-api")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.liquibase:micronaut-liquibase")
-
+    testImplementation("org.assertj:assertj-core:3.6.1")
 
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
@@ -45,6 +46,12 @@ micronaut {
     processing {
         incremental(true)
         annotations("com.example.*")
+    }
+}
+jacocoTestReport {
+    dependsOn(test)
+    reports {
+        xml.required = true
     }
 }
 

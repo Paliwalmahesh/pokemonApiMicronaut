@@ -2,16 +2,16 @@ package com.example.pokemon;
 
 public class PokemonCreateForm {
     private String name;
-    private Integer speciallityId;
+    private Integer specialityId;
     private String imageUrl;
 
     public PokemonCreateForm() {
 
     }
 
-    public PokemonCreateForm(String name, Integer speciallityId, String imageUrl) {
+    public PokemonCreateForm(String name, Integer specialityId, String imageUrl) {
         this.name = name;
-        this.speciallityId = speciallityId;
+        this.specialityId = specialityId;
         this.imageUrl = imageUrl;
     }
 
@@ -23,13 +23,15 @@ public class PokemonCreateForm {
         this.name = name;
     }
 
-    public Integer getSpeciallityId() {
-        return speciallityId;
+    public Integer getSpecialityId() {
+
+        return specialityId;
     }
 
-    public void setSpeciallity(Integer speciallityId) {
-        this.speciallityId = speciallityId;
+    public void setSpecialityId(Integer specialityId) {
+        this.specialityId = specialityId;
     }
+
 
     public String getImageUrl() {
         return imageUrl;

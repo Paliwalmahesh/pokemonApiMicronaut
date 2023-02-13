@@ -1,6 +1,6 @@
 package com.example.pokemon;
 
-import com.example.speciallity.Speciallity;
+import com.example.speciality.Speciality;
 
 import javax.persistence.*;
 
@@ -15,15 +15,15 @@ public class Pokemon {
 
   private String name;
   @ManyToOne
-  @JoinColumn(referencedColumnName = "id", name = "speciallity")
-  private Speciallity speciallity;
-  private String imageurl;
+  @JoinColumn(referencedColumnName = "id", name = "speciality")
+  private Speciality speciality;
+  private String imageUrl;
 
-  public Pokemon(Long id, String name, Speciallity speciallity, String imageurl) {
+  public Pokemon(Long id, String name, Speciality speciality, String imageUrl) {
     this.id = id;
     this.name = name;
-    this.speciallity = speciallity;
-    this.imageurl = imageurl;
+    this.speciality = speciality;
+    this.imageUrl = imageUrl;
   }
 
   public Long getId() {
@@ -42,19 +42,19 @@ public class Pokemon {
     this.name = name;
   }
 
-  public Speciallity getSpeciallity() {
-    return speciallity;
+  public Speciality getSpeciality() {
+    return speciality;
   }
 
-  public void setSpeciallity(Speciallity speciallity) {
-    this.speciallity = speciallity;
+  public void setSpeciality(Speciality speciality) {
+    this.speciality = speciality;
   }
 
-  public String getImageurl() {
-    return imageurl;
+  public String getImageUrl() {
+    return imageUrl;
   }
 
-  public void setImageurl(String imageurl) {
-    this.imageurl = imageurl;
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }

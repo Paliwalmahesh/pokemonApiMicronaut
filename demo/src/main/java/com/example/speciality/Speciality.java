@@ -1,4 +1,4 @@
-package com.example.speciallity;
+package com.example.speciality;
 
 
 import javax.persistence.Entity;
@@ -6,13 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Speciallity")
-public class Speciallity {
+@Table(name = "Speciality")
+public class Speciality {
     @Id
     private Integer id;
     private String name;
 
-    public Speciallity() {
+    public Speciality() {
     }
 
     public Integer getId() {
@@ -31,7 +31,7 @@ public class Speciallity {
         this.name = name;
     }
 
-    public Speciallity(Integer id, String name) {
+    public Speciality(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
