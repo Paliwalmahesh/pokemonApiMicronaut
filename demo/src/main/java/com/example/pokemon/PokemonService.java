@@ -5,6 +5,7 @@ import com.example.speciality.Speciality;
 import com.example.speciality.SpecialityService;
 import jakarta.inject.Singleton;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Singleton
@@ -28,22 +29,27 @@ public class PokemonService {
         .orElseThrow(() -> new PokemonValidationException("No such pokemon"));
   }
 
+  String pokemonValidate(Pokemon pokemon) {
+    if (pokemon.getName() == null) {
+      return  "null value of Name is not allowed";
+    } else if (pokemon.getImageUrl() == null) {
+      return  "null value of ImageUrl is not allowed";
+    } else if (pokemon.getSpeciality() == null) {
+      return "null value of Speciality is not allowed";
+    }
+    return null;
+  }
   public Pokemon create(PokemonCreateForm pokemonCreate) {
     Speciality speciality = specialityService.get(pokemonCreate.getSpecialityId());
     Pokemon pokemon = new Pokemon();
     pokemon.setName(pokemonCreate.getName());
     pokemon.setImageUrl(pokemonCreate.getImageUrl());
     pokemon.setSpeciality(speciality);
+    if (existByName(pokemon)) {
+      throw new PokemonValidationException("Pokemon already exist");
+    } else if (pokemonValidate(pokemon) != null) {
+      throw new PokemonValidationException(pokemonValidate(pokemon));
 
-
-    if (pokemon.getName() == null) {
-      throw new PokemonValidationException("null value of Name is not allowed");
-    } else if (existByName(pokemon)) {
-      throw new PokemonValidationException("Pokemon with same name already exists");
-    } else if (pokemon.getImageUrl() == null) {
-      throw new PokemonValidationException("null value of ImageUrl is not allowed");
-    } else if (pokemon.getSpeciality() == null) {
-      throw new PokemonValidationException("null value of Speciality is not allowed");
     } else {
 
       return pokemonRepositary.save(pokemon);
@@ -51,17 +57,9 @@ public class PokemonService {
   }
 
   public Pokemon updatePokemon(Pokemon pokemon) {
-
-    if (pokemon.getId() == null) {
-      throw new PokemonValidationException("null value of Id is not allowed");
-    } else if (pokemon.getName() == null) {
-      throw new PokemonValidationException("null value of Name is not allowed");
-    } else if (pokemon.getImageUrl() == null) {
-      throw new PokemonValidationException("null value of ImageUrl is not allowed");
-    } else if (pokemon.getSpeciality() == null) {
-      throw new PokemonValidationException("null value of Speciality is not allowed");
+    if (pokemonValidate(pokemon) != null) {
+      throw new PokemonValidationException(pokemonValidate(pokemon));
     } else if (existByName(pokemon)) {
-
       return pokemonRepositary.update(pokemon);
     } else {
       throw new PokemonValidationException("Pokemon Does not exist");
@@ -73,11 +71,8 @@ public class PokemonService {
         pokemonRepositary
             .findById(id)
             .orElseThrow(() -> new PokemonValidationException("No such pokemon"));
-    if (pokemon == null) {
-      throw new PokemonValidationException("No pokemon found");
-    } else {
+
       pokemonRepositary.delete(pokemon);
-    }
   }
 
   public boolean existByName(Pokemon pokemon) {

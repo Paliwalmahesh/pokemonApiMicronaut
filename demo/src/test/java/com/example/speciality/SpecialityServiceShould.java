@@ -7,9 +7,9 @@ import org.mockito.Mockito;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyInt;
-class SpecialityServiceTest {
+class SpecialityServiceShould {
     @Test
-    void testGetSpeciallity(){
+    void testGetSpeciality(){
         SpecialityRepositary specialityRepositary =Mockito.mock(SpecialityRepositary.class);
         Speciality speciality = new Speciality(1, "Grass");
         Mockito.when(specialityRepositary.findById(anyInt())).thenReturn(Optional.of(speciality));
