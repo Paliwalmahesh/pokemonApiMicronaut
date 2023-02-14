@@ -12,10 +12,9 @@ jobs:
         with:
           java-version: '17'
           distribution: 'corretto'
-
-      - name: Setup Gradle
-        uses: demo/gradle/gradle-build-action@v2
       - name: Give gradle permission
         run : chmod +x demo/gradlew
       - name : Run  gradle build
         run : ./demo/gradlew build
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
