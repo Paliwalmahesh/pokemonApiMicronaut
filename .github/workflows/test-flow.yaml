@@ -20,10 +20,10 @@ jobs:
           java-version: "17.0.6"
           distribution: "temurin"
       - name: Build with Gradle
-        uses: demo/gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
       - name: Grant Permissions to gradlew
-        run: chmod +x gradlew
+        run: chmod +x demo/gradlew
       - name: Test
-        run: ./gradlew test --tests "*"
+        run: ./demo/gradlew test --tests "*"
