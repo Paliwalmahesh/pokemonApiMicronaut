@@ -42,7 +42,7 @@ class PokemonServiceShould {
     specialityRepositary = Mockito.mock(SpecialityRepositary.class);
     specialityService = new SpecialityService(specialityRepositary);
     pokemonService = new PokemonService(pokemonRepositary, specialityService);
-    pokemonCreateForm = new PokemonCreateForm("Bulbasaur", 1,"546");
+    pokemonCreateForm = new PokemonCreateForm("Bulbasaur", 1, "546");
   }
 
   @Test
@@ -85,49 +85,76 @@ class PokemonServiceShould {
   @Test
   void testDelete() {
     Mockito.when(pokemonRepositary.findById(anyLong()))
-            .thenReturn(Optional.ofNullable(pokemon_example1));
+        .thenReturn(Optional.ofNullable(pokemon_example1));
     pokemonService.deletePokemon(anyLong());
     Mockito.verify(pokemonRepositary).findById(anyLong());
   }
 
- @Test
+  @Test
   void shouldThrowExceptionIfPokemonAlreadyExistOnCreate() {
     Mockito.when(pokemonRepositary.findByName(anyString()))
-            .thenReturn(Optional.ofNullable(pokemon_example1));
-   Mockito.when(specialityRepositary.findById(1))
-           .thenReturn(Optional.ofNullable(speciality_example_1));
+        .thenReturn(Optional.ofNullable(pokemon_example1));
+    Mockito.when(specialityRepositary.findById(1))
+        .thenReturn(Optional.ofNullable(speciality_example_1));
     pokemonService.existByName(pokemon_example2);
-    Assertions.assertThatThrownBy(()->
-            pokemonService.create(pokemonCreateForm))
-            .isInstanceOf((PokemonValidationException.class))
-            .hasMessage("Pokemon already exist");
-
+    Assertions.assertThatThrownBy(() -> pokemonService.create(pokemonCreateForm))
+        .isInstanceOf((PokemonValidationException.class))
+        .hasMessage("Pokemon already exist");
   }
+
   @Test
   void shouldThrowExceptionOfNullInputName() {
     PokemonCreateForm pokemonCreateForm1 = new PokemonCreateForm(null, 1, "gfdg");
     Mockito.when(specialityRepositary.findById(1))
-            .thenReturn(Optional.ofNullable(speciality_example_1));
+        .thenReturn(Optional.ofNullable(speciality_example_1));
     Assertions.assertThatThrownBy(() -> pokemonService.create(pokemonCreateForm1))
         .isInstanceOf((PokemonValidationException.class))
         .hasMessage("null value of Name is not allowed");
   }
+
   @Test
   void shouldThrowExceptionOfNullInputImageUrl() {
-    pokemonCreateForm = new PokemonCreateForm("name",1,null);
+    pokemonCreateForm = new PokemonCreateForm("name", 1, null);
     Mockito.when(specialityRepositary.findById(1))
-            .thenReturn(Optional.ofNullable(speciality_example_1));
+        .thenReturn(Optional.ofNullable(speciality_example_1));
     Assertions.assertThatThrownBy(() -> pokemonService.create(pokemonCreateForm))
-            .isInstanceOf((PokemonValidationException.class))
-            .hasMessage("null value of ImageUrl is not allowed");
+        .isInstanceOf((PokemonValidationException.class))
+        .hasMessage("null value of ImageUrl is not allowed");
   }
+
   @Test
   void shouldThrowExceptionOfNullInputSpeciality() {
-    pokemonCreateForm = new PokemonCreateForm("hgj",1,"gfdg");
-    Mockito.when(specialityRepositary.findById(1))
-            .thenReturn(Optional.ofNullable(null));
+    pokemonCreateForm = new PokemonCreateForm("hgj", 1, "gfdg");
+    Mockito.when(specialityRepositary.findById(1)).thenReturn(Optional.ofNullable(null));
     Assertions.assertThatThrownBy(() -> pokemonService.create(pokemonCreateForm))
+        .isInstanceOf((PokemonValidationException.class))
+        .hasMessage("No Speciality Available for this 1");
+  }
+
+  @Test
+  void shouldThrowExceptionOfInputPokemonNotFound() {
+
+    Mockito.when(pokemonRepositary.update(any(Pokemon.class))).thenReturn(pokemon_example1);
+    Mockito.when(pokemonRepositary.findByName(anyString())).thenReturn(Optional.ofNullable(null));
+    Assertions.assertThatThrownBy(() -> pokemonService.updatePokemon(pokemon_example1))
+        .isInstanceOf((PokemonValidationException.class))
+        .hasMessage("Pokemon Does not exist");
+  }
+  @Test
+  void shouldThrowExceptionOfInputPokemonNull() {
+    pokemon_example1 =new Pokemon(1L,"Pikachu",null,"132");
+    Mockito.when(pokemonRepositary.update(any(Pokemon.class))).thenReturn(pokemon_example1);
+    Mockito.when(pokemonRepositary.findByName(anyString())).thenReturn(Optional.ofNullable(null));
+    Assertions.assertThatThrownBy(() -> pokemonService.updatePokemon(pokemon_example1))
             .isInstanceOf((PokemonValidationException.class))
-            .hasMessage("No Speciality Available for this 1");
+            .hasMessage("null value of Speciality is not allowed");
+  }
+  @Test
+  void shouldThrowExceptionOfInputPokemonIdNotExist() {
+    Mockito.when(pokemonRepositary.findById(anyLong()))
+            .thenReturn(Optional.ofNullable(null));
+    Assertions.assertThatThrownBy(() -> pokemonService.deletePokemon(anyLong()))
+        .isInstanceOf((PokemonValidationException.class))
+        .hasMessage("No such pokemon");
   }
 }

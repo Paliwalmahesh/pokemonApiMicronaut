@@ -31,14 +31,15 @@ public class PokemonService {
 
   String pokemonValidate(Pokemon pokemon) {
     if (pokemon.getName() == null) {
-      return  "null value of Name is not allowed";
+      return "null value of Name is not allowed";
     } else if (pokemon.getImageUrl() == null) {
-      return  "null value of ImageUrl is not allowed";
+      return "null value of ImageUrl is not allowed";
     } else if (pokemon.getSpeciality() == null) {
       return "null value of Speciality is not allowed";
     }
     return null;
   }
+
   public Pokemon create(PokemonCreateForm pokemonCreate) {
     Speciality speciality = specialityService.get(pokemonCreate.getSpecialityId());
     Pokemon pokemon = new Pokemon();
@@ -67,12 +68,9 @@ public class PokemonService {
   }
 
   public void deletePokemon(Long id) {
-    Pokemon pokemon =
-        pokemonRepositary
-            .findById(id)
-            .orElseThrow(() -> new PokemonValidationException("No such pokemon"));
+    Pokemon pokemon = getById(id);
 
-      pokemonRepositary.delete(pokemon);
+    pokemonRepositary.delete(pokemon);
   }
 
   public boolean existByName(Pokemon pokemon) {
