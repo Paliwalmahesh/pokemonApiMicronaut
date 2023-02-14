@@ -4,7 +4,6 @@ import com.example.exception.PokemonValidationException;
 import com.example.speciality.Speciality;
 import com.example.speciality.SpecialityRepositary;
 import com.example.speciality.SpecialityService;
-import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.*;
 
-@MicronautTest
+
 class PokemonServiceShould {
   PokemonService pokemonService;
   SpecialityService specialityService;
